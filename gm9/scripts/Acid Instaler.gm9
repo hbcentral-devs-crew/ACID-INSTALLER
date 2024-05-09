@@ -1,0 +1,51 @@
+set PREVIEW_MODE 0:/gm9/imagenes/ACID.png
+#Hecho Con Cariño por Saturn Team
+
+##################### Menu Principal ####################
+@Start
+
+labelsel -s "Selecciona una opcion." Instalador_*
+
+goto Start
+
+############################## Instalar CIAS ##############################
+@Instalador_Instalar_Cias
+
+# Instalamos todos los CIAS de la carpeta cias
+@ARCHIVO_CIA
+
+    if find 0:/cias/*.cia ARCHIVO_CIA 
+		if not install -o -s $[ARCHIVO_CIA]
+			echo "Error: Archivo cia no instalado.\nPasa todos los archivos de nuevo\na tu SD y ejecuta de nuevo\neste script."
+			poweroff
+		end
+		rm -o -s $[ARCHIVO_CIA]
+		goto ARCHIVO_CIA
+	else 
+		goto echo
+	end
+
+@echo
+echo "Hecho, todos los archivos cias han sido instalados\ny limpiados"   
+
+goto Instalador_Opciones_de_Apagado
+
+####################### Opciones de Apagado ######################
+
+@Instalador_Opciones_de_Apagado
+labelsel -s "Selecciona una opcion." Power_*
+
+####################### Volver ######################
+@Power_Volver
+goto Start
+
+####################### Reiniciar consola ######################
+@Power_Reiniciar_Consola
+reboot
+
+####################### Apagar consola ######################
+@Power_Apagar_Consola
+poweroff
+
+####################### Salir ######################
+@Power_Salir_a_Godmode9
